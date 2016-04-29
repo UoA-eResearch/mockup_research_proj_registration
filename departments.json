@@ -1,0 +1,49 @@
+{ 
+    "Arts": {
+        "SCLL": "Cultures, Languages, Linquistics",
+        "HUM": "Humanities",
+        "SS": "Social Sciences"
+    },
+    "Business": {
+        "ACC": "Accounting and Finance",
+        "CL": "Commercial Law",
+        "ECON": "Economices",
+        "GMANG": "Graduate Management",
+        "ISOS": "Management and International Business",
+        "MARK": "Marketing",
+        "PROPERTY": "Property"
+    },
+    "Education": {
+        "etc": "etc"
+    },
+    "Engineering": {
+        "etc": "etc"
+    },
+    "Law": {
+        "etc": "etc"
+    },
+    "FMHS": {
+        "etc": "etc"
+    },
+    "NICAI": {
+        "etc": "etc"
+    },
+    "Science": {
+        "BIOSCI": "Biological Sciences",
+        "CHEM": "Chemical Sciences",
+        "COMPSCI": "Computer Science",
+        "ENV": "Environment",
+        "SPORTSCI": "Exercise Science",
+        "MARINE": "Institute of Marine Science",
+        "MATHS": "Mathematics",
+        "PHYSICS": "Physics",
+        "PSYCH": "Psychology",
+        "STATS": "Statistics"
+    },
+    "ABI": {
+        "ABI": "Auckland Bioengineering Institute"
+    },
+    "Liggins": {
+        "Liggins": "The Liggins Institute"
+    }
+}

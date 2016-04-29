@@ -1,0 +1,223 @@
+<html>
+  <head>
+    <title>Project Registration</title>
+  </head>
+  <script src="jquery.min.js"></script>
+  <script src="ResearchProjectRegistration.js"></script>
+  <script> 
+    function roles_loaded() {
+      add_member(null);
+      add_existing_projects();
+      set_group_name("RO");
+    }
+    function init() {
+      getURLParameters();
+      populate_faculty_departments("parent_department");
+      load_roles(roles_loaded);
+    }
+  </script>
+  <body onload="init();">
+    <h2>Register a Research Project</h2>
+    <form onSubmit="return false;">
+    <div id="project_title">
+      <table>
+        <tr>
+          <td colspan="3" align="right">
+            <b>Grant Reference</b><input type="text" id="grant_reference" size="16" value=""/>
+          </td>
+        </tr>
+        <tr>
+          <th align="right">Project Title</th>
+          <td align="left"><input type="text" id="project_title" size="88" value=""/></td>
+          <td align="right">
+            <b>Project Reference</b>
+            <select id="project_reference">
+              <option value="new" selected="true">New Project</option>
+            </select>
+        </tr>
+        <tr>
+          <th align="right">Research Group</th>
+          <td><input type="text" id="research_group" size="88" value=""/></td>
+          <td align="right">
+            <b>Department</b>
+            <select id="parent_department">
+              <option value="PROMPT">Parent Department</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3"><b>Abstract</b><br>
+            <textarea id="abstract" rows="10" cols="132"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td><b>Start Date</b><input type="date" id="start_date"></td>
+          <td><b>Estimated End Date</b><input type="date" id="end_date"></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3" >
+            <image id="members_span_expand" src="images/expandedTriangle.gif" onclick="toggle_div('members_span');"><b>Members</b> <br>
+            <span id="members_span" style="display:block">
+              <table border="1" width="100%">
+                <thead>
+                  <tr>
+                    <th width="100px">Role</th>
+                    <th width="250px">Name</th>
+                    <th>Orcid</th>
+                    <th>Login</th>
+                    <th>Institute</th>
+                    <th>Department</th>
+                    <th>Email</th>
+                    <th onclick="add_member();"><b>+</b></th>
+                  </tr>
+                </thead>
+                <tbody id="members">
+                </tbody>
+              </table>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td align="left" colspan="2">
+            <input type="button" id="request_storage" value="Request Storage" onclick="select_div('research_data')"/>
+            <input type="button" id="request_vm" value="Request VM"  onclick="select_div('research_vm')"/>
+            <input type="button" id="request_nesi" value="NeSI Resources"/>
+          </td>
+          <td align="right">
+            <input type="button" id="delete_members_b" value="Delete Selected Members" onclick="delete_members();"/>
+            <input type="button" id="undo_delete_members_b" value="Undo Delete" onclick="undo_delete_members();"/>
+            <input type="button" id="create_acl" value="Create Group ACL" onclick="select_div('group_editor')"/>
+          </td>
+      </table>
+      
+      <div id="research_data" style="display:none">
+        <h2>Create Research Project Shared folder</h2>
+        Please fill in as much of the form as possible. It will help IT manage and protect your research data.
+        <p>
+        <form id="data">
+          <h3>How Big?</h3>
+          Estimate your storage requirements, so IT to plan for future storage purchases.
+          <table>
+            <tr><th align="left" width="100px">Now (GBytes)</th>
+                <th align="left" width="100px">In a Year (GBytes)</th>
+                <th align="left" width="100px">After two year (GBytes)</th>
+            </tr>
+            <tr>
+              <td width="200px"><input type="text" id="disk_now" size="8" value=""/></td>
+              <td width="200px"><input type="text" id="disk_plus_one" size="8" value=""/></td>
+              <td width="200px"><input type="text" id="disk_plus_two" size="8" value=""/></td>
+           </tr>   
+           <tr><td colspan="3"><b>Service Type</b></td><tr>
+            <tr>
+              <td colspan="3">
+                  <input type="checkbox" id="storage_samba" checked="true"> Samba (CIFS) 
+                  <input type="checkbox" id="storage_nfs" > NFS 
+                  <input type="checkbox" id="storage_s3" > S3 Object Storage
+                  <input type="checkbox" id="storage_www" > Web Interface
+              </td> 
+           </tr>   
+          </table>
+          
+          <h3>Data Ownership and Security</h3>
+          Make sure the right storage solution is provided by IT, and your data is properly protected. (Multiple rights might apply)
+          <p>
+          <table>
+            <tr>
+              <td><input type="checkbox" id="data_ownership_UoA" checked="true"> Data owned by UoA (default for Staff)</td> 
+              <td><input type="checkbox" id="data_ownership_student" checked="true"> Student (default for students, unless agreement in place)</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" id="data_ownership_shared" > External Research Group</td> 
+              <td><b>Ext Group Reference</b> <input type="text" id="data_3rd_party_rg_reference" size="32" value=""/></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" id="data_ownership_commercial" > Commercial (UniServices Agreement)</td>
+              <td><input type="checkbox" id="data_ownership_third_party" > Third Party (Right to Use License)</td>
+            </tr>
+            <tr>
+              <td><b>UniServices Reference</b> <input type="text" id="uniservices_reference" size="32" value=""/></td>
+              <td><b>Right to Use Reference</b> <input type="text" id="data_3rd_party_license_reference" size="32" value=""/></td>
+            </tr>
+            <tr><td colspan="2">&nbsp;</td><tr>
+            <tr>
+              <td><input type="checkbox" name="restricted_medical" /> In Confidence Medical</td>
+              <td><input type="checkbox" name="restricted_ethics" /> In Confidence Ethics</td>
+            </tr>
+            <tr>
+              <td colspon="2"><b>Ethics Application Reference</b> <input type="text" id="ethics_reference" size="32" value=""/></td>
+            </tr>
+            <tr><td colspan="2">&nbsp;</td><tr>
+            <tr>
+              <td><input type="checkbox" name="restricted_commercial" /> In Confidence Commercial</td>
+              <td><input type="checkbox" name="restricted_security" /> Restricted (or higher security classification)</td>
+            </tr> 
+            <tr><td colspan="2">&nbsp;</td><tr>
+            <tr>
+              <td><input type="checkbox" name="no_copies" /> No Backup</td>
+              <td><input type="checkbox" name="de_identified" /> De-Identified Data</td>
+            </tr><tr>
+              <td><input type="checkbox" name="Encrypt_Disk" /> Encrypt on Disk</td>
+              <td><input type="checkbox" name="Encrypt_link" /> Encrypt Traffic</td>
+            </tr>
+            <tr><td colspan="2">&nbsp;</td><tr>
+            <tr>
+              <td>Retain until <input type="date" id="data_retention_until_date" /></td>
+              <td>Dispose of by <input type="date" id="data_disposal_date" /></td>
+            </tr>
+            <tr>
+              <td>Medical Research is minimum of 10 years after trial<br>
+                  Child data must be kept until they are 26 (a min 10 years)<br>
+                  General Research Data, minimum of 6 years post publication
+              </td>
+              <td>Disposal may be required by Ethics committees<br>
+                  And under some external contract or licensing arrangements.
+              </td>
+            </tr>
+            <tr><td colspan="2">&nbsp;</td><tr>
+            <tr>
+              <td>Publication license <input type="text" id="data_license_reference" size="32" value="CC BY-NC"/></td>
+              <td>Embargoed until <input type="date" id="data_access_embargoed_date" /></td>
+            </tr>
+          </table>          
+        </form>
+        <br>
+      </div>
+      
+      <div id="research_vm" style="display:none">
+        <h2>Create Research Virtual Machine</h2>
+        Please fill in as much of the form as possible. If you are unsure, we can help you through the process.<br>
+        ...<br>
+      </div>
+
+      <div id="group_editor" style="display:none">
+        <h2>Access Control list Editor</h2>
+        Set up access control lists for sharing your research data, and controlling access to virtual machines.<br>
+        <b>Nb.</b> All groups will start with the project reference, even if you manually alter the name<br>
+        <ul>
+          <li>Select the group you want to edit (if it exists, the people will be selected in the members table above)
+          <li>Add each person to the research group's members table (above).
+          <li>Select or unSelect people using the checkbox at the end of each person's row in the members table.
+          <li>Click the update button.
+        </ul>
+        <form id="group_acl_form" action="return false;">
+          <select id="group_acl_select" onchange="set_group_name(this.value);">
+            <optgroup label="Fixed Storage Groups">
+              <option value="RO">Read Only Access to Data</option>
+              <option value="RW">Read Write Access to Data</option>
+            </optgroup>
+            <optgroup label="VM Auto Generated Groups">
+              <option value="VM1234">These people can login to VM 1234 (add one of these per VM)</option>
+              <option value="VM6789">These people can login to VM 6789 </option>
+            </optgroup>
+            <optgroup label="User Generated Groups">
+              <option value="New">Create a new Group for finer grained access to your project share</option>
+            </optgroup>
+          </select>
+          <input type="text" id="group_name" value="" size="64">
+          <input type="checkbox" id="email_alias"> <b>Create Email Alias for this Group</b><br>
+          <input type="button" id="update_group" value="Update Group"/>
+          <br>
+      </div>
+  </body>
+</html>
