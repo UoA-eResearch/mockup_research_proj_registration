@@ -80,14 +80,14 @@
         </tr>
         <tr>
           <td align="left" colspan="2">
-            <input type="button" id="request_storage" value="Request Storage" onclick="select_div('research_data')"/>
+            <input type="button" id="request_storage" value="Request/Manage Storage" onclick="select_div('research_data')"/>
             <input type="button" id="request_vm" value="Request VM"  onclick="select_div('research_vm')"/>
             <input type="button" id="request_nesi" value="NeSI Resources"/>
           </td>
           <td align="right">
             <input type="button" id="delete_members_b" value="Delete Selected Members" onclick="delete_members();"/>
             <input type="button" id="undo_delete_members_b" value="Undo Delete" onclick="undo_delete_members();"/>
-            <input type="button" id="create_acl" value="Create Group ACL" onclick="select_div('group_editor')"/>
+            <input type="button" id="create_acl" value="Create/Maintain Group ACL" onclick="select_div('group_editor')"/>
           </td>
       </table>
       
@@ -133,24 +133,23 @@
             </tr>
             <tr>
               <td><input type="checkbox" id="data_ownership_commercial" > Commercial (UniServices Agreement)</td>
-              <td><input type="checkbox" id="data_ownership_third_party" > Third Party (Right to Use License)</td>
+              <td><b>UniServices Reference</b> <input type="text" id="uniservices_reference" size="32" value=""/></td>
             </tr>
             <tr>
-              <td><b>UniServices Reference</b> <input type="text" id="uniservices_reference" size="32" value=""/></td>
+              <td><input type="checkbox" id="data_ownership_third_party" > Third Party (Right to Use License)</td>
               <td><b>Right to Use Reference</b> <input type="text" id="data_3rd_party_license_reference" size="32" value=""/></td>
             </tr>
             <tr><td colspan="2">&nbsp;</td><tr>
+              <tr>
+                <td><input type="checkbox" name="restricted_commercial" /> In Confidence Commercial</td>
+                <td><input type="checkbox" name="restricted_security" /> Restricted (or higher security classification)</td>
             <tr>
               <td><input type="checkbox" name="restricted_medical" /> In Confidence Medical</td>
-              <td><input type="checkbox" name="restricted_ethics" /> In Confidence Ethics</td>
+              <td><input type="checkbox" name="restricted_ethics" /> In Confidence Human/Animal Ethics</td>
             </tr>
             <tr>
               <td colspon="2"><b>Ethics Application Reference</b> <input type="text" id="ethics_reference" size="32" value=""/></td>
             </tr>
-            <tr><td colspan="2">&nbsp;</td><tr>
-            <tr>
-              <td><input type="checkbox" name="restricted_commercial" /> In Confidence Commercial</td>
-              <td><input type="checkbox" name="restricted_security" /> Restricted (or higher security classification)</td>
             </tr> 
             <tr><td colspan="2">&nbsp;</td><tr>
             <tr>
@@ -161,14 +160,19 @@
               <td><input type="checkbox" name="Encrypt_link" /> Encrypt Traffic</td>
             </tr>
             <tr><td colspan="2">&nbsp;</td><tr>
+              <tr>
+                <td><input type="checkbox" id="patent" > Patent Applied For</td>
+                <td><b>Patent Reference</b> <input type="text" id="patent_reference" size="32" value=""/></td>
+              </tr>
             <tr>
               <td>Retain until <input type="date" id="data_retention_until_date" /></td>
               <td>Dispose of by <input type="date" id="data_disposal_date" /></td>
             </tr>
             <tr>
-              <td>Medical Research is minimum of 10 years after trial<br>
+              <td>Medical Trial is minimum of 10 years after trial<br>
                   Child data must be kept until they are 26 (a min 10 years)<br>
-                  General Research Data, minimum of 6 years post publication
+                  General Research Data, minimum of 6 years post publication<br>
+                  Patent Applied for, minimum of 21 years post application
               </td>
               <td>Disposal may be required by Ethics committees<br>
                   And under some external contract or licensing arrangements.
